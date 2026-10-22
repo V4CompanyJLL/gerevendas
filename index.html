@@ -580,7 +580,7 @@ a{color:#431b20}a:hover{color:#d63221}
 <span style="font-size: 13px; font-weight: 700; color: #d63221; letter-spacing: 0.08em; text-transform: uppercase">Preços</span>
 <h2 style="margin: 14px 0 0; font-size: clamp(32px, 4.2vw, 56px); line-height: 1.08; letter-spacing: -0.045em; font-weight: 700">Um plano para cada fase da sua equipe</h2>
 </div>
-<p style="margin: 18px auto 52px; text-align: center; font-size: 17px; line-height: 1.6; color: #5b4f55; max-width: 620px">Todos os recursos do CRM em todos os planos. Você escolhe pelo tamanho da equipe e pelo volume de leads e conversas.</p>
+<p style="margin: 18px auto 52px; text-align: center; font-size: 17px; line-height: 1.6; color: #5b4f55; max-width: 620px">Todos os recursos do CRM em todos os planos. Você escolhe pelo tamanho da equipe e pelo volume de leads.</p>
 <div data-dyn data-pricing-period="{{billingMonths}}">
 <div class="gv-billing-wrap">
 <div class="gv-billing-tabs" role="tablist" aria-label="Período do plano" onTouchStart="{{billingTouchStart}}" onTouchEnd="{{billingTouchEnd}}">
@@ -623,7 +623,7 @@ a{color:#431b20}a:hover{color:#d63221}
 <div style="position: relative"><b style="font-size: 15px; font-weight: 700">Garantia de [X] dias</b><div style="font-size: 13px; line-height: 1.5; color: #cdbcb8; margin-top: 4px">Não gostou? Devolvemos o valor, sem burocracia.</div></div>
 </div>
 </div>
-<p style="margin: 20px 0 0; text-align: center; font-size: 13px; color: #66666e">Valores mensais por workspace. Limites de conversas por mês. O bônus de IA é renovado todo mês e custeado pela Gere Vendas.</p>
+<p style="margin: 20px 0 0; text-align: center; font-size: 13px; color: #66666e">Valores mensais por workspace. O bônus de IA é renovado todo mês e custeado pela Gere Vendas.</p>
 </div>
 </section>
 
@@ -976,10 +976,10 @@ class Component extends window.DCLogic {
       };
     }
     var plans = [
-      plan('Essencial', 'Para equipes pequenas que querem sair da planilha.', '239,90', 'Até 3 usuários', [['Até 3 acessos'], ['6.000 leads no pipeline'], ['4.000 conversas por mês'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA', false]], false, ''),
-      plan('Crescimento', 'Para equipes em expansão que querem IA no atendimento.', '499,90', 'Até 6 usuários', [['Até 6 acessos'], ['12.000 leads no pipeline'], ['8.000 conversas por mês'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA liberado']], false, 'R$ 50/mês de IA por nossa conta'),
-      plan('Performance', 'Para operações que vivem de WhatsApp e escala.', '849,90', 'Até 10 usuários', [['Até 10 acessos'], ['25.000 leads no pipeline'], ['15.000 conversas por mês'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA liberado']], true, 'R$ 100/mês de IA por nossa conta'),
-      plan('Empresarial', 'Para grandes equipes e regras próprias.', '', 'Mais de 10 usuários', [['Acessos sob medida'], ['Leads e conversas sob medida'], ['Tudo do Performance'], ['API e webhooks dedicados'], ['Gerente de sucesso'], ['SLA de suporte contratual']], false, '')
+      plan('Essencial', 'Para equipes pequenas que querem sair da planilha.', '239,90', 'Até 3 usuários', [['Até 3 acessos'], ['6.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA', false]], false, ''),
+      plan('Crescimento', 'Para equipes em expansão que querem IA no atendimento.', '499,90', 'Até 6 usuários', [['Até 6 acessos'], ['12.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA liberado']], false, 'R$ 50/mês de IA por nossa conta'),
+      plan('Performance', 'Para operações que vivem de WhatsApp e escala.', '849,90', 'Até 10 usuários', [['Até 10 acessos'], ['25.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA liberado']], true, 'R$ 100/mês de IA por nossa conta'),
+      plan('Empresarial', 'Para grandes equipes e regras próprias.', '', 'Mais de 10 usuários', [['Acessos sob medida'], ['Leads sob medida'], ['Tudo do Performance'], ['API e webhooks dedicados'], ['Gerente de sucesso'], ['SLA de suporte contratual']], false, '')
     ];
     var allPlans = ['Inbox WhatsApp e Instagram', 'Contatos, empresas e tarefas', 'App no celular', 'Suporte em português', 'Migração assistida', 'Dados protegidos (LGPD)'];
 
@@ -1002,7 +1002,7 @@ class Component extends window.DCLogic {
       { q: 'O agente de IA substitui meus vendedores?', a: 'Não. Ele cuida do primeiro atendimento e da qualificação, e passa o lead para um vendedor quando a conversa pede um humano.' },
       { q: 'Consigo importar meus contatos de outra ferramenta?', a: 'Sim. Você importa planilhas CSV ou Excel, e nos planos pagos nossa equipe ajuda na migração.' },
       { q: 'Cada vendedor vê só os próprios leads?', a: 'Sim. Papéis e permissões definem quem vê quais leads e conversas; gestores enxergam a operação inteira.' },
-      { q: 'O que acontece se eu passar do limite de conversas?', a: 'Avisamos antes de chegar ao limite. Você pode subir de plano a qualquer momento, e a diferença é calculada proporcionalmente.' },
+      { q: 'O que acontece se eu passar do limite de leads?', a: 'Avisamos antes de chegar ao limite. Você pode subir de plano a qualquer momento, e a diferença é calculada proporcionalmente.' },
       { q: 'Como funciona o bônus de IA?', a: 'Nos planos com agente SDR, a Gere Vendas paga uma parte do consumo de IA todo mês: R$ 50 no Crescimento e R$ 100 no Performance. Acima disso, você usa o seu próprio provedor.' }
     ];
     var openFaq = this.state.faq;
