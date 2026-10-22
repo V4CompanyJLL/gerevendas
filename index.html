@@ -66,6 +66,22 @@ a{color:#431b20}a:hover{color:#d63221}
 @media (max-width:1100px){.gv-chip{display:none !important}}
 @media (max-width:900px){.gv-navlinks{display:none !important}.gv-hide-sm{display:none !important}}
 @media (prefers-reduced-motion: reduce){*,*::before{animation:none !important;transition:none !important}}
+
+.gv-billing-wrap{margin:0 auto 38px;max-width:650px}
+.gv-billing-tabs{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:6px;border:1px solid #ebe3e3;border-radius:20px;background:#f7f3f2;isolation:isolate;touch-action:pan-y}
+.gv-billing-indicator{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/4);border-radius:14px;background:linear-gradient(115deg,#ea382a,#c62c1d);box-shadow:0 8px 22px -9px rgba(214,50,33,.65);pointer-events:none;transition:transform .28s cubic-bezier(.22,.61,.36,1);z-index:-1}
+.gv-billing-tab{border:0;background:transparent;color:#5b4f55;min-height:66px;padding:10px 4px;border-radius:14px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:color .2s ease}
+.gv-billing-tab[aria-selected="true"]{color:#fff}
+.gv-billing-tab small{font-size:10px;font-weight:600;opacity:.85}
+.gv-billing-tab:focus-visible{outline:2px solid #231c20;outline-offset:2px}
+.gv-billing-caption{text-align:center;font-size:12px;line-height:1.6;color:#76666c;margin:14px 0 0;min-height:38px}
+.gv-plan-total{font-size:12px;line-height:1.6;opacity:.78;min-height:38px;margin:2px 0 4px}
+.gv-plan-saving{display:block;font-weight:700;color:#c32c1d}
+.gv-plan-saving-dark{color:#ffb5a6}
+@media(max-width:600px){.gv-billing-tabs{border-radius:17px}.gv-billing-tab{font-size:12px;min-height:64px}.gv-billing-tab small{font-size:9px}.gv-billing-wrap{margin-bottom:30px}}
+
+@keyframes gvBillingSlide{from{transform:translateX(var(--billing-from))}to{transform:translateX(var(--billing-to))}}
+.gv-billing-indicator{animation:gvBillingSlide .28s cubic-bezier(.22,.61,.36,1) both}
 </style>
 <noscript><style>#gv-root:empty::after{content:"Ative o JavaScript para ver esta página.";display:block;padding:40px;font-family:sans-serif}</style></noscript>
 </head>
@@ -565,7 +581,17 @@ a{color:#431b20}a:hover{color:#d63221}
 <h2 style="margin: 14px 0 0; font-size: clamp(32px, 4.2vw, 56px); line-height: 1.08; letter-spacing: -0.045em; font-weight: 700">Um plano para cada fase da sua equipe</h2>
 </div>
 <p style="margin: 18px auto 52px; text-align: center; font-size: 17px; line-height: 1.6; color: #5b4f55; max-width: 620px">Todos os recursos do CRM em todos os planos. Você escolhe pelo tamanho da equipe e pelo volume de leads e conversas.</p>
-<div class="gv-rv" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; align-items: stretch">
+<div data-dyn data-pricing-period="{{billingMonths}}">
+<div class="gv-billing-wrap">
+<div class="gv-billing-tabs" role="tablist" aria-label="Período do plano" onTouchStart="{{billingTouchStart}}" onTouchEnd="{{billingTouchEnd}}">
+<span class="gv-billing-indicator" aria-hidden="true" style="{{billingIndicator}}"></span>
+<sc-for list="{{billingOptions}}" as="b">
+<button type="button" role="tab" class="gv-billing-tab" id="{{b.id}}" aria-selected="{{b.selected}}" aria-controls="gv-pricing-panel" tabindex="{{b.tabIndex}}" onClick="{{b.pick}}" onKeyDown="{{b.keydown}}">{{b.label}}<small>{{b.badge}}</small></button>
+</sc-for>
+</div>
+<p class="gv-billing-caption">{{billingCaption}}</p>
+</div>
+<div id="gv-pricing-panel" role="tabpanel" aria-label="{{billingPanelLabel}}" aria-live="polite" aria-atomic="true" class="gv-rv" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; align-items: stretch">
 <sc-for list="{{plans}}" as="p" hint-placeholder-count="4">
 <div class="gv-lift" style="{{p.cardStyle}}">
 <sc-if value="{{p.popular}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; top: -13px; left: 24px; background: linear-gradient(90deg, #ff6a55, #d63221); color: #ffffff; border-radius: 999px; padding: 4px 12px; font-size: 11.5px; font-weight: 700; box-shadow: 0 8px 20px -6px rgba(234,56,42,.7)">Mais escolhido</span></sc-if>
@@ -573,8 +599,9 @@ a{color:#431b20}a:hover{color:#d63221}
 <div style="font-size: 13.5px; line-height: 1.5; opacity: 0.8; min-height: 40px">{{p.desc}}</div>
 <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 8px; flex-wrap: wrap"><span style="font-size: 15px; font-weight: 700; opacity: 0.8">{{p.cur}}</span><span style="{{p.priceStyle}}">{{p.price}}</span><span style="font-size: 13px; opacity: 0.75">{{p.unit}}</span></div>
 <sc-if value="{{p.bonus}}" hint-placeholder-val="{{ false }}"><div style="{{p.bonusStyle}}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>{{p.bonus}}</div></sc-if>
+<div class="gv-plan-total">{{p.billingDetail}}<sc-if value="{{p.saving}}"><span class="{{p.savingClass}}">{{p.saving}}</span></sc-if></div>
 <div style="font-size: 12px; opacity: 0.7; min-height: 18px">{{p.note}}</div>
-<a href="#comecar" class="{{p.btnClass}}" style="margin-top: 12px; width: 100%">{{p.cta}}</a>
+<a href="{{p.ctaHref}}" data-cfg="{{p.ctaConfig}}" class="{{p.btnClass}}" style="margin-top: 12px; width: 100%">{{p.cta}}</a>
 <ul style="list-style: none; margin: 16px 0 0; padding: 16px 0 0; border-top: 1px solid {{p.divider}}; display: flex; flex-direction: column; gap: 10px; font-size: 13.5px">
 <sc-for list="{{p.items}}" as="it" hint-placeholder-count="6">
 <li style="{{it.style}}"><sc-if value="{{it.on}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{p.check}}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px"><path d="M20 6 9 17l-5-5"></path></svg></sc-if><sc-if value="{{it.off}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px"><path d="M18 6 6 18M6 6l12 12"></path></svg></sc-if>{{it.t}}</li>
@@ -582,6 +609,7 @@ a{color:#431b20}a:hover{color:#d63221}
 </ul>
 </div>
 </sc-for>
+</div>
 </div>
 <div class="gv-rv" style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 16px">
 <div style="flex: 2 1 480px; border: 1px solid #ebe3e3; border-radius: 22px; padding: 24px 28px">
@@ -668,8 +696,8 @@ a{color:#431b20}a:hover{color:#d63221}
   var CONFIG = {
     signupUrl: '#comecar',        // TODO: página de cadastro do CRM, ex.: https://app.gerevendas.com.br/cadastro
     loginUrl: '#entrar',          // TODO: login do CRM, ex.: https://app.gerevendas.com.br/login
-    whatsappUrl: '#whatsapp',     // TODO: ex.: https://wa.me/55DDDNUMERO?text=Quero%20conhecer%20o%20Gere%20Vendas
-    salesUrl: '#whatsapp',        // TODO: falar com vendas (pode ser o mesmo WhatsApp)
+    whatsappUrl: 'https://wa.me/5547992230135',     // TODO: ex.: https://wa.me/55DDDNUMERO?text=Quero%20conhecer%20o%20Gere%20Vendas
+    salesUrl: 'https://wa.me/5547992230135',        // TODO: falar com vendas (pode ser o mesmo WhatsApp)
     demoUrl: '#plataforma'        // TODO: vídeo ou agendamento de demonstração
   };
 
@@ -686,7 +714,7 @@ a{color:#431b20}a:hover{color:#d63221}
 class Component extends window.DCLogic {
   constructor(props) {
     super(props);
-    this.state = { tab: 'pipeline', annual: true, paused: false, faq: 0 };
+    this.state = { tab: 'pipeline', annual: false, billingMonths: 1, paused: false, faq: 0 };
   }
   componentDidMount() {
     var self = this;
@@ -882,11 +910,46 @@ class Component extends window.DCLogic {
       { n: '03', title: 'Ligue a IA e as campanhas', desc: 'Ative o agente SDR e conecte Meta e Google Ads para medir receita por origem.' }
     ];
 
+
+    var billingMonths = this.state.billingMonths || 1;
+    var billingPeriods = [1, 6, 9, 12];
+    var billingPrices = {
+      '239,90': {1:23990,6:21590,9:20390,12:19190},
+      '499,90': {1:49990,6:44990,9:42490,12:39990},
+      '849,90': {1:84990,6:76490,9:72290,12:67990}
+    };
+    function money(cents) { return (cents / 100).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+    function chooseBilling(months, focusTab) {
+      self.previousBillingMonths = self.state.billingMonths || 1;
+      self.setState({billingMonths:months});
+      if (focusTab) { var button = document.getElementById('gv-billing-' + months); if (button) button.focus(); }
+    }
+    var billingOptions = billingPeriods.map(function(months,index) {
+      return {
+        id:'gv-billing-' + months, label:months === 1 ? 'Mensal' : months + ' meses',
+        badge:months === 1 ? 'Cobrança mensal' : months === 12 ? 'Melhor valor' : months === 6 ? 'Mais economia' : 'Mais vantagens',
+        selected:billingMonths === months ? 'true' : 'false', tabIndex:billingMonths === months ? '0' : '-1',
+        pick:function(){chooseBilling(months,false);},
+        keydown:function(event){
+          var next = index;
+          if(event.key === 'ArrowRight') next = (index+1)%4;
+          else if(event.key === 'ArrowLeft') next = (index+3)%4;
+          else if(event.key === 'Home') next = 0;
+          else if(event.key === 'End') next = 3;
+          else return;
+          event.preventDefault(); chooseBilling(billingPeriods[next],true);
+        }
+      };
+    });
+
     var cardBase = 'position: relative; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 6px; box-sizing: border-box;';
     var light = cardBase + ' background: #ffffff; border: 1px solid #ebe3e3; color: #231c20';
     var dark = cardBase + ' background: radial-gradient(320px 220px at 100% 0%, rgba(234,56,42,.45), transparent 70%), #120a0c; border: 1px solid rgba(255,138,120,.55); color: #ffffff; box-shadow: 0 30px 70px -24px rgba(234,56,42,.55)';
     function plan(name, desc, priceStr, users, rows, popular, bonus) {
       var custom = !priceStr;
+      var baseCents = custom ? 0 : billingPrices[priceStr][1];
+      var selectedCents = custom ? 0 : billingPrices[priceStr][billingMonths];
+      var savingCents = (baseCents - selectedCents) * billingMonths;
       var offColor = popular ? '#8a7470' : '#a1a1aa';
       var items = rows.map(function (r) {
         var isOn = r[1] !== false;
@@ -894,7 +957,12 @@ class Component extends window.DCLogic {
       });
       return {
         name: name, desc: desc, items: items, popular: popular,
-        cur: custom ? '' : 'R$', price: custom ? 'Sob consulta' : priceStr,
+        cur: custom ? '' : 'R$', price: custom ? 'Sob consulta' : money(selectedCents),
+        billingDetail: custom ? 'Condições personalizadas para sua operação.' : billingMonths === 1 ? 'Cobrança mensal.' : 'R$ ' + money(selectedCents * billingMonths) + ' no período de ' + billingMonths + ' meses.',
+        saving: !custom && billingMonths > 1 ? 'Economize R$ ' + money(savingCents) + ' no período' : '',
+        savingClass: popular ? 'gv-plan-saving gv-plan-saving-dark' : 'gv-plan-saving',
+        ctaHref: custom ? CONFIG.salesUrl : CONFIG.signupUrl,
+        ctaConfig: custom ? 'salesUrl' : 'signupUrl',
         priceStyle: 'font-weight: 800; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; line-height: 1.15; font-size: ' + (custom ? '28px' : '38px'),
         unit: custom ? '' : '/mês',
         note: users,
@@ -958,6 +1026,20 @@ class Component extends window.DCLogic {
       flow: flow, flowShort: flowShort, kpis: kpis, bars: bars, funnel: funnel, sources: sources,
       marquee: marquee, aiPoints: aiPoints, steps: steps, plans: plans,
       allPlans: allPlans, pains: pains, gains: gains, faq: faq,
+      billingMonths:billingMonths, billingOptions:billingOptions,
+      billingIndicator:'--billing-from:' + (billingPeriods.indexOf(self.previousBillingMonths || billingMonths)*100) + '%;--billing-to:' + (billingPeriods.indexOf(billingMonths)*100) + '%;transform:translateX(' + (billingPeriods.indexOf(billingMonths)*100) + '%)',
+      billingPanelLabel:billingMonths === 1 ? 'Planos mensais' : 'Planos de ' + billingMonths + ' meses',
+      billingCaption:billingMonths === 1 ? 'Escolha um período maior e veja sua economia.' : 'Valores mensais equivalentes para ' + billingMonths + ' meses. Consulte as condições de pagamento com vendas.',
+      billingTouchStart:function(event){self.billingTouch = {x:event.changedTouches[0].clientX,y:event.changedTouches[0].clientY};},
+      billingTouchEnd:function(event){
+        if(!self.billingTouch) return;
+        var dx=event.changedTouches[0].clientX-self.billingTouch.x;
+        var dy=event.changedTouches[0].clientY-self.billingTouch.y;
+        self.billingTouch=null;
+        if(Math.abs(dx)<40 || Math.abs(dx)<Math.abs(dy)) return;
+        var next=Math.max(0,Math.min(3,billingPeriods.indexOf(billingMonths)+(dx<0?1:-1)));
+        chooseBilling(billingPeriods[next],false);
+      },
       monthly: annual ? 'false' : 'true', annual: annual ? 'true' : 'false',
       monthlyStyle: annual ? tOff : tOn, annualStyle: annual ? tOn : tOff,
       pickMonthly: function () { self.setState({ annual: false }); },
@@ -1046,6 +1128,7 @@ class Component extends window.DCLogic {
     var vals = comp.renderVals();
     registering = false;
     for (var i = 0; i < registry.length; i++) {
+      if (registry[i].tpl.hasAttribute('data-pricing-period') && registry[i].el.getAttribute('data-pricing-period') === String(vals.billingMonths)) continue;
       var out = [];
       renderNode(registry[i].tpl, vals, out);
       registry[i].el.replaceWith(out[0]);
