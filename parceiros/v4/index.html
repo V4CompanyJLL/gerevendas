@@ -107,9 +107,9 @@ footer a{color:#ffb5a6;text-decoration:none}
 <p class="lead">Clientes de uma unidade V4 participante pagam menos em qualquer plano e período. Compare com o preço normal ao lado de cada valor.</p>
 <div class="periods" role="tablist" aria-label="Período de pagamento">
 <button type="button" role="tab" data-months="1" aria-selected="true">Mensal</button>
-<button type="button" role="tab" data-months="3" aria-selected="false">3 meses<small>3% off</small></button>
-<button type="button" role="tab" data-months="6" aria-selected="false">6 meses<small>5% off</small></button>
-<button type="button" role="tab" data-months="12" aria-selected="false">12 meses<small>10% off</small></button>
+<button type="button" role="tab" data-months="3" aria-selected="false">3 meses<small>10% off</small></button>
+<button type="button" role="tab" data-months="6" aria-selected="false">6 meses<small>15% off</small></button>
+<button type="button" role="tab" data-months="12" aria-selected="false">12 meses<small>20% off</small></button>
 </div>
 <div class="plans" aria-live="polite">
 <div class="card plan" data-plan="essencial">
@@ -207,9 +207,9 @@ footer a{color:#ffb5a6;text-decoration:none}
 
 <script>
 (function () {
-  // preço mensal equivalente por período (R$). V4: 3%, 5% e 10% sobre R$ 379 / 589 / 999.
+  // preço mensal equivalente por período (R$). V4: 10%, 15% e 20% sobre R$ 379 / 589 / 999.
   // Normal (LP principal): 5%, 10% e 20% sobre R$ 449 / 699 / 1.299. Arredondado para baixo.
-  var V4 = { essencial: { 1: 379, 3: 367, 6: 360, 12: 341 }, crescimento: { 1: 589, 3: 571, 6: 559, 12: 530 }, performance: { 1: 999, 3: 969, 6: 949, 12: 899 } };
+  var V4 = { essencial: { 1: 379, 3: 341, 6: 322, 12: 303 }, crescimento: { 1: 589, 3: 530, 6: 500, 12: 471 }, performance: { 1: 999, 3: 899, 6: 849, 12: 799 } };
   var NORMAL = { essencial: { 1: 449, 3: 426, 6: 404, 12: 359 }, crescimento: { 1: 699, 3: 664, 6: 629, 12: 559 }, performance: { 1: 1299, 3: 1234, 6: 1169, 12: 1039 } };
   function reais(n) { return n.toLocaleString('pt-BR'); }
   function aplicar(meses) {
