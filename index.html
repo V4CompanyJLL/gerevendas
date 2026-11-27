@@ -623,7 +623,7 @@ a{color:#431b20}a:hover{color:#d63221}
 <div style="position: relative"><b style="font-size: 15px; font-weight: 700">Garantia de [X] dias</b><div style="font-size: 13px; line-height: 1.5; color: #cdbcb8; margin-top: 4px">Não gostou? Devolvemos o valor, sem burocracia.</div></div>
 </div>
 </div>
-<p style="margin: 20px 0 0; text-align: center; font-size: 13px; color: #66666e">Valores mensais por workspace. O bônus de IA é renovado todo mês e custeado pela Gere Vendas.</p>
+<p style="margin: 20px 0 0; text-align: center; font-size: 13px; color: #66666e">Valores mensais por workspace. Acima do limite de leads atendidos pela IA, R$ 40 a cada 100 leads. As mensagens da API oficial do WhatsApp são cobradas pela Meta direto na conta da sua empresa.</p>
 </div>
 </section>
 
@@ -911,12 +911,12 @@ class Component extends window.DCLogic {
 
 
     var billingMonths = this.state.billingMonths || 1;
-    var billingPeriods = [1, 6, 9, 12];
+    var billingPeriods = [1, 3, 6, 12];
     var billingPrices = {
-      // mensal; 6, 9 e 12 meses com 10%, 15% e 20% de desconto (arredondado para baixo)
-      '399,00': {1:39900,6:35900,9:33900,12:31900},
-      '599,00': {1:59900,6:53900,9:50900,12:47900},
-      '1.099,00': {1:109900,6:98900,9:93400,12:87900}
+      // mensal; 3, 6 e 12 meses com 5%, 10% e 20% de desconto (arredondado para baixo)
+      '449,00': {1:44900,3:42600,6:40400,12:35900},
+      '699,00': {1:69900,3:66400,6:62900,12:55900},
+      '1.299,00': {1:129900,3:123400,6:116900,12:103900}
     };
     function money(cents) { return (cents / 100).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
     function chooseBilling(months, focusTab) {
@@ -976,9 +976,9 @@ class Component extends window.DCLogic {
       };
     }
     var plans = [
-      plan('Essencial', 'Para equipes pequenas que querem sair da planilha.', '399,00', 'Até 3 usuários', [['Até 3 acessos'], ['6.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA', false]], false, ''),
-      plan('Crescimento', 'Para equipes em expansão que querem IA no atendimento.', '599,00', 'Até 6 usuários', [['Até 6 acessos'], ['12.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA liberado']], false, 'R$ 50/mês de IA por nossa conta'),
-      plan('Performance', 'Para operações que vivem de WhatsApp e escala.', '1.099,00', 'Até 10 usuários', [['Até 10 acessos'], ['25.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA liberado']], true, 'R$ 100/mês de IA por nossa conta'),
+      plan('Essencial', 'Para equipes pequenas que querem sair da planilha.', '449,00', 'Até 3 usuários', [['Até 3 acessos'], ['6.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA', false]], false, ''),
+      plan('Crescimento', 'Para equipes em expansão que querem IA no atendimento.', '699,00', 'Até 6 usuários', [['Até 6 acessos'], ['12.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA: até 1.000 leads/mês']], false, ''),
+      plan('Performance', 'Para operações que vivem de WhatsApp e escala.', '1.299,00', 'Até 10 usuários', [['Até 10 acessos'], ['25.000 leads no pipeline'], ['Todos os recursos do CRM'], ['Automações, relatórios e atribuição'], ['Agente SDR com IA: até 2.500 leads/mês']], true, ''),
       plan('Empresarial', 'Para grandes equipes e regras próprias.', '', 'Mais de 10 usuários', [['Acessos sob medida'], ['Leads sob medida'], ['Tudo do Performance'], ['API e webhooks dedicados'], ['Gerente de sucesso'], ['SLA de suporte contratual']], false, '')
     ];
     var allPlans = ['Inbox de WhatsApp', 'Contatos, empresas e tarefas', 'App no celular', 'Suporte em português', 'Migração assistida', 'Dados protegidos (LGPD)'];

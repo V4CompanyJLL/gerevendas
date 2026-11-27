@@ -37,7 +37,6 @@ section{padding:88px 0 0}
 .eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#d63221}
 h2{margin:10px 0 0;font-size:clamp(26px,3.4vw,38px);line-height:1.15;font-weight:800;letter-spacing:-.015em}
 .lead{margin:14px 0 0;font-size:17px;line-height:1.7;color:#5b4f55;max-width:680px}
-.prices{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px}
 .card{border:1px solid #ebe3e3;border-radius:18px;padding:28px;background:#ffffff}
 .card.v4{background:#120a0c;color:#ffffff;border-color:#120a0c;box-shadow:0 30px 60px -30px rgba(67,27,32,.6)}
 .card h3{margin:0;font-size:15px;font-weight:700;color:#8c7a7f}
@@ -49,8 +48,17 @@ h2{margin:10px 0 0;font-size:clamp(26px,3.4vw,38px);line-height:1.15;font-weight
 .rows li{display:flex;justify-content:space-between;gap:12px;padding-top:12px;border-top:1px solid #ebe3e3;font-size:15px}
 .card.v4 .rows li{border-color:rgba(255,255,255,.12)}
 .rows b{font-weight:700;white-space:nowrap}
-.save{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#ffe9e4;color:#7a1d13;border:1px solid #ffc9bd;border-radius:14px;padding:16px 20px;font-size:15px}
-.save b{font-size:18px}
+.periods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:6px;margin-top:32px;border:1px solid #ebe3e3;border-radius:18px;background:#f7f3f2;max-width:680px}
+.periods button{border:0;border-radius:12px;background:transparent;color:#5b4f55;font:700 14px 'Sora','Segoe UI',sans-serif;min-height:56px;padding:6px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.periods button small{font-size:10.5px;font-weight:600;opacity:.85}
+.periods button[aria-selected="true"]{background:linear-gradient(115deg,#ea382a,#c62c1d);color:#ffffff;box-shadow:0 8px 22px -9px rgba(214,50,33,.65)}
+.periods button:focus-visible{outline:2px solid #231c20;outline-offset:2px}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}
+.from{margin:10px 0 0;font-size:13px;color:#8c7a7f}
+.card.v4 .from{color:#d9c9c5}
+.plan .price{margin-top:4px}
+.total{margin:4px 0 0;font-size:13px;color:#6b5d62;min-height:20px}
+.card.v4 .total{color:#d9c9c5}
 .note{margin:14px 0 0;font-size:14px;line-height:1.6;color:#6b5d62}
 .scope{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px}
 .scope .card h3{color:#231c20;font-size:17px}
@@ -67,7 +75,7 @@ h2{margin:10px 0 0;font-size:clamp(26px,3.4vw,38px);line-height:1.15;font-weight
 footer{margin-top:96px;padding:36px 0;background:#120a0c;color:#bfaea9;font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
 footer a{color:#ffb5a6;text-decoration:none}
-@media (max-width:860px){.prices,.scope,.form-wrap{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.wrap{padding:0 20px}.hero{padding-top:48px;padding-bottom:64px}}
+@media (max-width:860px){.plans,.scope,.form-wrap{grid-template-columns:1fr}.periods{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr 1fr}.wrap{padding:0 20px}.hero{padding-top:48px;padding-bottom:64px}}
 @media (max-width:520px){.steps{grid-template-columns:1fr}.price{font-size:38px}}
 </style>
 </head>
@@ -83,7 +91,7 @@ footer a{color:#ffb5a6;text-decoration:none}
 <div class="wrap hero">
 <span class="pill">Parceria V4 Company</span>
 <h1>Gere Vendas CRM para <span class="grad">clientes V4</span></h1>
-<p>Organize seus leads, acompanhe o funil e dê visibilidade à sua equipe comercial. Clientes V4 têm acesso ao Gere Vendas por <b style="color:#ffffff">R$ 299/mês</b>, com até cinco usuários e implantação por <b style="color:#ffffff">R$ 990</b>.</p>
+<p>Organize seus leads, acompanhe o funil e dê visibilidade à sua equipe comercial. Clientes V4 têm <b style="color:#ffffff">preço de parceiro</b> em qualquer plano do Gere Vendas, a partir de <b style="color:#ffffff">R$ 379/mês</b>.</p>
 <div class="ctas">
 <a class="btn btn-primary" href="#ativar">Ativar condição V4</a>
 <a class="btn btn-glass" href="#precos">Comparar preços</a>
@@ -95,30 +103,50 @@ footer a{color:#ffb5a6;text-decoration:none}
 <section id="precos">
 <div class="wrap">
 <span class="eyebrow">Preços</span>
-<h2>O mesmo CRM, com condição de parceiro</h2>
-<p class="lead">A condição V4 vale para empresas com contrato ativo com uma unidade V4 participante. Quem não é cliente V4 contrata o Gere Vendas direto.</p>
-<div class="prices">
-<div class="card v4">
-<h3>Cliente V4</h3>
-<p class="price">R$ 299<small>/mês</small></p>
+<h2>Os mesmos planos, com preço de parceiro V4</h2>
+<p class="lead">Clientes de uma unidade V4 participante pagam menos em qualquer plano e período. Compare com o preço normal ao lado de cada valor.</p>
+<div class="periods" role="tablist" aria-label="Período de pagamento">
+<button type="button" role="tab" data-months="1" aria-selected="true">Mensal</button>
+<button type="button" role="tab" data-months="3" aria-selected="false">3 meses<small>3% off</small></button>
+<button type="button" role="tab" data-months="6" aria-selected="false">6 meses<small>5% off</small></button>
+<button type="button" role="tab" data-months="12" aria-selected="false">12 meses<small>10% off</small></button>
+</div>
+<div class="plans" aria-live="polite">
+<div class="card plan" data-plan="essencial">
+<h3>Essencial</h3>
+<p class="from">Normal: <s data-normal>R$ 449</s>/mês</p>
+<p class="price">R$ <span data-price>379</span><small>/mês</small></p>
+<p class="total" data-total>Cobrança mensal.</p>
 <ul class="rows">
-<li><span>Licença por empresa, até 5 usuários</span><b>R$ 299/mês</b></li>
-<li><span>Implantação inicial</span><b>R$ 990</b></li>
-<li><span>Usuário adicional</span><b>R$ 39/mês</b></li>
+<li><span>Usuários</span><b>Até 3</b></li>
+<li><span>Leads no pipeline</span><b>6.000</b></li>
+<li><span>Agente SDR com IA</span><b>Não incluso</b></li>
 </ul>
 </div>
-<div class="card">
-<h3>Contratação direta</h3>
-<p class="price">R$ 349<small>/mês</small></p>
+<div class="card plan v4" data-plan="crescimento">
+<h3>Crescimento</h3>
+<p class="from">Normal: <s data-normal>R$ 699</s>/mês</p>
+<p class="price">R$ <span data-price>589</span><small>/mês</small></p>
+<p class="total" data-total>Cobrança mensal.</p>
 <ul class="rows">
-<li><span>Licença por empresa, até 5 usuários</span><b>R$ 349/mês</b></li>
-<li><span>Implantação inicial</span><b>R$ 1.190</b></li>
-<li><span>Usuário adicional</span><b>R$ 39/mês</b></li>
+<li><span>Usuários</span><b>Até 6</b></li>
+<li><span>Leads no pipeline</span><b>12.000</b></li>
+<li><span>IA atende</span><b>até 1.000 leads/mês</b></li>
+</ul>
+</div>
+<div class="card plan" data-plan="performance">
+<h3>Performance</h3>
+<p class="from">Normal: <s data-normal>R$ 1.299</s>/mês</p>
+<p class="price">R$ <span data-price>999</span><small>/mês</small></p>
+<p class="total" data-total>Cobrança mensal.</p>
+<ul class="rows">
+<li><span>Usuários</span><b>Até 10</b></li>
+<li><span>Leads no pipeline</span><b>25.000</b></li>
+<li><span>IA atende</span><b>até 2.500 leads/mês</b></li>
 </ul>
 </div>
 </div>
-<div class="save"><b>R$ 800 de economia</b><span>nos primeiros 12 meses, somando implantação e mensalidade.</span></div>
-<p class="note">Se o Growth Class da V4 já incluir a implantação do CRM, o Gere Vendas cobra só a licença. Ninguém paga duas vezes pelo mesmo setup.</p>
+<p class="note">Implantação: R$ 990 para clientes V4 (R$ 1.190 na contratação direta). Se o Growth Class da V4 já incluir a implantação do CRM, o Gere Vendas cobra só a licença. Ninguém paga duas vezes pelo mesmo setup.</p>
 </div>
 </section>
 
@@ -127,7 +155,7 @@ footer a{color:#ffb5a6;text-decoration:none}
 <span class="eyebrow">O que está incluído</span>
 <h2>Escopo da condição V4</h2>
 <div class="scope">
-<div class="card"><h3>Licença do CRM</h3><p>Uma conta por empresa, até cinco usuários, gestão de leads e oportunidades, funil comercial, tarefas e acompanhamento das vendas.</p></div>
+<div class="card"><h3>Licença do CRM</h3><p>Uma conta por empresa, com 3, 6 ou 10 usuários conforme o plano, gestão de leads e oportunidades, funil comercial, tarefas e acompanhamento das vendas.</p></div>
 <div class="card"><h3>Implantação</h3><p>Configuração de um funil comercial, cadastro da equipe, importação de uma base em planilha e um treinamento de até 60 minutos.</p></div>
 <div class="card"><h3>Suporte</h3><p>Ajuda com dúvidas de uso e problemas da plataforma.</p></div>
 <div class="card"><h3>Serviços adicionais</h3><p>SDR com IA, integrações personalizadas, automações sob medida e consultoria comercial, com orçamento próprio.</p></div>
@@ -176,5 +204,27 @@ footer a{color:#ffb5a6;text-decoration:none}
 </div>
 </footer>
 
+
+<script>
+(function () {
+  // preço mensal equivalente por período (R$). V4: 3%, 5% e 10% sobre R$ 379 / 589 / 999.
+  // Normal (LP principal): 5%, 10% e 20% sobre R$ 449 / 699 / 1.299. Arredondado para baixo.
+  var V4 = { essencial: { 1: 379, 3: 367, 6: 360, 12: 341 }, crescimento: { 1: 589, 3: 571, 6: 559, 12: 530 }, performance: { 1: 999, 3: 969, 6: 949, 12: 899 } };
+  var NORMAL = { essencial: { 1: 449, 3: 426, 6: 404, 12: 359 }, crescimento: { 1: 699, 3: 664, 6: 629, 12: 559 }, performance: { 1: 1299, 3: 1234, 6: 1169, 12: 1039 } };
+  function reais(n) { return n.toLocaleString('pt-BR'); }
+  function aplicar(meses) {
+    document.querySelectorAll('.periods button').forEach(function (b) { b.setAttribute('aria-selected', String(Number(b.dataset.months) === meses)); });
+    document.querySelectorAll('.plan').forEach(function (card) {
+      var plano = card.dataset.plan;
+      var mes = V4[plano][meses];
+      card.querySelector('[data-price]').textContent = reais(mes);
+      card.querySelector('[data-normal]').textContent = 'R$ ' + reais(NORMAL[plano][meses]);
+      card.querySelector('[data-total]').textContent = meses === 1 ? 'Cobrança mensal.' : 'R$ ' + reais(mes * meses) + ' no período de ' + meses + ' meses.';
+    });
+  }
+  document.querySelectorAll('.periods button').forEach(function (b) { b.addEventListener('click', function () { aplicar(Number(b.dataset.months)); }); });
+  aplicar(1);
+})();
+</script>
 </body>
 </html>
